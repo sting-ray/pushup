@@ -1,20 +1,16 @@
 <?php
 
 include "database.inc.php";
-//todo: move database functions into database.inc.php
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST["name"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
-        $name = inputFix($_POST["name"]);
-        $email = inputFix($_POST["email"]);
+        $name = fixInput($_POST["name"]);
+        $email = fixInput($_POST["email"]);
         $password = makePassword($_POST["password"], $config);
-        $sponser = inputFix($_POST["sponser"]);
-        $sql = sprintf("INSERT INTO USER (NAME, EMAIL, PASSWORD, SPONSER) VALUES ('$name','$email','$password','$sponser');");
-        $conn = new mysqli($config["db_host"], $config["db_user"], $config["db_password"], $config["db_name"]);
-        if ($conn->query($sql) === TRUE) {
+        $sponser = fixInput($_POST["sponser"]);
+        $sql = "INSERT INTO USER (NAME, EMAIL, PASSWORD, SPONSER) VALUES ('$name','$email','$password','$sponser');";
+        if (updateDatabase($sql,$config)) {
             echo "New record created successfully";
-        }
-        else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
         }
     }
     else {
