@@ -6,12 +6,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST["name"]) && !empty($_POST["email"]) && !empty($_POST["password"])) {
         $name = fixInput($_POST["name"]);
         $email = fixInput($_POST["email"]);
-        $password = makePassword($_POST["password"], $config);
+        $password = makePassword($_POST["password"]);
         $sponser = fixInput($_POST["sponser"]);
-        $sql = "INSERT INTO USER (NAME, EMAIL, PASSWORD, SPONSER) VALUES ('$name','$email','$password','$sponser');";
-        if (updateDatabase($sql,$config)) {
-            echo "New record created successfully";
+        if (queryDatabase("SELECT ID FROM USER WHERE EMAIL='$email'") == null) {
+            $sql = "INSERT INTO USER (NAME, EMAIL, PASSWORD, SPONSER) VALUES ('$name','$email','$password','$sponser');";
+            if (updateDatabase($sql)) {
+                echo "New record created successfully";
+            }
         }
+        else {
+            echo "You have already registered with this email address!<br>";
+        }
+
     }
     else {
         echo "Name, email or password was missing!";

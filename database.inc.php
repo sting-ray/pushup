@@ -27,10 +27,27 @@ function updateDatabase($sql) {
     }
 }
 
-function queryDatabase($sql) {
+function queryDatabase($sql, $returnArray = false) {
     $conn = new mysqli(db_host, db_user, db_password, db_name);
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-    return $conn->query($sql);
+
+    $queryResult =  $conn->query($sql);
+
+    if ($queryResult->num_rows == 0) {
+        return null;
+    }
+    else {
+        if (!$returnArray) {
+            return $queryResult->fetch_assoc();
+        }
+        else {
+        $result = array();
+            while ($row = $queryResult->fetch_assoc()) {
+                $result[][] = $row;
+            }
+            return $result;
+        }
+    }
 }
