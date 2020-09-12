@@ -1,4 +1,6 @@
 <?php
+
+//build all the teams
 function makeTeams() {
     $team = array();
     $conn = new mysqli(db_host, db_user, db_password, db_name);
@@ -9,6 +11,7 @@ function makeTeams() {
     return $team;
 }
 
+//for tracking each team
 class Team {
     private $id;
     private $name;

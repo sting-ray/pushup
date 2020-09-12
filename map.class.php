@@ -1,4 +1,6 @@
 <?php
+
+//for creating the main player map
 class Map {
     private $mapYX = array();
     private $teamsAtStart = array();

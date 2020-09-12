@@ -27,5 +27,6 @@ if ($team[$_SESSION["pushup_team"]]->getPoints() >= ($team[$_SESSION["pushup_tea
 }
 
 echo "Your team has: ".$team[$_SESSION["pushup_team"]]->getPoints()." points.<br>";
-echo "Your team needs: ".$team[$_SESSION["pushup_team"]]->getPointsNeeded($map)." points.<br>";
+echo "Your team needs: ".$team[$_SESSION["pushup_team"]]->getPointsNeeded($map)." points to move forwards.<br>";
+echo "Your team needs: ".($team[$_SESSION["pushup_team"]]->getPointsNeeded($map) / 2)." points to move sideways.<br>";
 echo $map->drawMap();
