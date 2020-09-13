@@ -5,8 +5,6 @@ include "database.inc.php";
 include "team.class.php";
 include "map.class.php";
 
-echo "<h1>Main page</h1><br>";
-
 $map = new Map();
 $team = makeTeams(); //returns array
 
@@ -14,19 +12,20 @@ foreach ($team as $t) {
     $t->putOnMap($map);
 }
 
-
-if ($team[$_SESSION["pushup_team"]]->getPoints() >= $team[$_SESSION["pushup_team"]]->getPointsNeeded($map)) {
-    $team[$_SESSION["pushup_team"]]->calculateMovement($map, "up");
-    $team[$_SESSION["pushup_team"]]->calculateMovement($map, "up_left");
-    $team[$_SESSION["pushup_team"]]->calculateMovement($map, "up_right");
+if ($team[$playerTeam]->getPoints() >= $team[$playerTeam]->getPointsNeeded($map)) {
+    $team[$playerTeam]->calculateMovement($map, "up");
+    $team[$playerTeam]->calculateMovement($map, "up_left");
+    $team[$playerTeam]->calculateMovement($map, "up_right");
 }
 
-if ($team[$_SESSION["pushup_team"]]->getPoints() >= ($team[$_SESSION["pushup_team"]]->getPointsNeeded($map) / 2)) {
-    $team[$_SESSION["pushup_team"]]->calculateMovement($map, "left");
-    $team[$_SESSION["pushup_team"]]->calculateMovement($map, "right");
+if ($team[$playerTeam]->getPoints() >= ($team[$playerTeam]->getPointsNeeded($map) / 2)) {
+    $team[$playerTeam]->calculateMovement($map, "left");
+    $team[$playerTeam]->calculateMovement($map, "right");
 }
 
-echo "Your team has: ".$team[$_SESSION["pushup_team"]]->getPoints()." points.<br>";
-echo "Your team needs: ".$team[$_SESSION["pushup_team"]]->getPointsNeeded($map)." points to move forwards.<br>";
-echo "Your team needs: ".($team[$_SESSION["pushup_team"]]->getPointsNeeded($map) / 2)." points to move sideways.<br>";
+echo "<h1>Main page</h1><br>";
+
+echo "Your team has: ".$team[$playerTeam]->getPoints()." points out of a maximum: ".($team[$playerTeam]->getPointsNeeded($map) * 1.5)."<br>";
+echo "Your team needs: ".$team[$playerTeam]->getPointsNeeded($map)." points to move forwards.<br>";
+echo "Your team needs: ".($team[$playerTeam]->getPointsNeeded($map) / 2)." points to move sideways.<br>";
 echo $map->drawMap();

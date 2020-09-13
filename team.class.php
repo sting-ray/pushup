@@ -53,24 +53,24 @@ class Team {
     }
 
     function calculateMovement ($map, $direction) {
-        $moveY = $this->y;
-        $moveX = $this->x;
-        while ($move = true) {
+        $move["y"] = $this->y;
+        $move["x"] = $this->x;
+        while ($untilBroken = true) {
             switch ($direction) {
                 case "left":
-                    $status = $map->getTileStatus($moveY, --$moveX);
+                    $status = $map->getTileStatus($move["y"], --$move["x"]);
                     break;
                 case "up_left":
-                    $status = $map->getTileStatus(--$moveY, --$moveX);
+                    $status = $map->getTileStatus(--$move["y"], --$move["x"]);
                     break;
                 case "up":
-                    $status = $map->getTileStatus(--$moveY, $moveX);
+                    $status = $map->getTileStatus(--$move["y"], $move["x"]);
                     break;
                 case "up_right":
-                    $status = $map->getTileStatus(--$moveY, ++$moveX);
+                    $status = $map->getTileStatus(--$move["y"], ++$move["x"]);
                     break;
                 case "right":
-                    $status = $map->getTileStatus($moveY, ++$moveX);
+                    $status = $map->getTileStatus($move["y"], ++$move["x"]);
                     break;
                 default:
                     return false; //Something has gone wrong..
@@ -79,8 +79,8 @@ class Team {
             switch($status) {
                 case 0:
                     //normal blank tile
-                    $map->updateTile($moveY, $moveX, 2, "<img src='icons/$direction.png'>");
-                    return true;
+                    $map->updateTile($move["y"], $move["x"], 2, "<a href='move.php?move=$direction'><img src='icons/$direction.png'></a>");
+                    return $move;
                     break;
                 case 2:
                     //other team exists, do nothing and loop again.
@@ -88,11 +88,11 @@ class Team {
                 case 4:
                     //end is within reach!
                     //later on may use a different tile icon for this significant event
-                    $map->updateTile($moveY, $moveX, 2, "<img src='icons/$direction.png'>");
-                    return true;
+                    $map->updateTile($move["y"], $move["x"], 2, "<a href='move.php?move=$direction'><img src='icons/$direction.png'></a>");
+                    return $move;
                     break;
                 default:
-                    //no tile found (status:100) or something else weird happened...
+                    //no tile found (status:100), ran into a wall or something else weird happened...
                     return false;
                     break;
             }

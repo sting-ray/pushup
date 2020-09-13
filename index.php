@@ -2,6 +2,14 @@
 
 include "database.inc.php";
 
+session_start();
+
+if (isset($_SESSION["pushup_id"])) {
+    header('Location: main.php');
+    echo "re-directing to main.php";
+    die();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST["email"]) && !empty($_POST["password"])) {
         $email = fixInput($_POST["email"]);
