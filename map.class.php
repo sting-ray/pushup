@@ -22,7 +22,7 @@ class Map {
         foreach ($this->mapYX as $y => $mapX) {
             $result .= "<tr>";
             foreach ($mapX as $x => $map) {
-                $result .= "<td>".$map["image"]."</td>";
+                $result .= "<td title='Points needed to move off this tile: ".$map["toLeave"]."'>".$map["image"]."</td>";
             }
             $result .= "</tr>";
         }

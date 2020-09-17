@@ -8,6 +8,7 @@ if (!isset($_SESSION["pushup_id"])) {
 
 if(!$_SESSION["pushup_team"]) {
     echo "Thank you for registering you will manually be put into a team soon and can then participate";
+    session_destroy();
     die();
 }
 
@@ -39,5 +40,6 @@ echo "Hello: $playerName<br>";
 <table><tr>
     <td><a href='main.php'>Main Page</a></td>
     <td><a href='pushup.php'>Enter Pushups</a></td>
+    <td><a href='team.php'>Team Details</a></td>
     <td><a href='logout.php'>Log Out</a></td>
 </tr></table><br>
