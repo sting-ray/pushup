@@ -4,7 +4,7 @@
 function makeTeams() {
     $team = array();
     $conn = new mysqli(db_host, db_user, db_password, db_name);
-    $queryResult = $conn->query("SELECT TEAM.ID, TEAM.NAME, CAPTAIN, FLAG, POSITION_X, POSITION_Y, POINTS, USER.NAME AS CAPTAIN_NAME FROM TEAM LEFT JOIN USER ON TEAM.CAPTAIN = USER.ID;");
+    $queryResult = $conn->query("SELECT TEAM.ID, TEAM.NAME, CAPTAIN, FLAG, START_X, START_Y, POINTS, USER.NAME AS CAPTAIN_NAME FROM TEAM LEFT JOIN USER ON TEAM.CAPTAIN = USER.ID;");
     while ($row = $queryResult->fetch_assoc()) {
         $team[$row["ID"]] = new Team($row);
     }
@@ -22,15 +22,33 @@ class Team {
     private $y;
     private $points;
 
-    function __construct($values) {
+    function __construct($values, $allTeams = true, $position = true) {
+
+        //If creating a single team, query the database for the values
+        //Otherwise all values are expected to come in via values
+        if ($allTeams == false) {
+            $conn = new mysqli(db_host, db_user, db_password, db_name);
+            $values = $conn->query("SELECT TEAM.ID, TEAM.NAME, CAPTAIN, FLAG, START_X, START_Y, POINTS, USER.NAME AS CAPTAIN_NAME FROM TEAM LEFT JOIN USER ON TEAM.CAPTAIN = USER.ID WHERE TEAM_ID=$values")->fetch_assoc();
+        }
+
         $this->id = $values["ID"];
         $this->name = $values["NAME"];
         $this->captainId = $values["CAPTAIN"];
         $this->captainName = $values["CAPTAIN_NAME"];
-        $this->flagImg = "<img src='team_flags/".$values["FLAG"]."'>";
-        $this->x = $values["POSITION_X"];
-        $this->y = $values["POSITION_Y"];
+        $this->flagImg = "<a href='team.php?team=".$this->id."'><img src='team_flags/" . $values["FLAG"] . "' title='".$this->name."'></a>";
         $this->points = $values["POINTS"];
+        $this->x = $values["START_X"];
+        $this->y = $values["START_Y"];
+
+        if ($position) {
+            $conn = new mysqli(db_host, db_user, db_password, db_name);
+            $queryResult = $conn->query("SELECT X, Y FROM TEAM_MOVE WHERE TEAM_ID=".$this->id." ORDER BY DATETIME DESC LIMIT 1");
+            if ($row = $queryResult->fetch_assoc()) {
+                $this->x = $row["X"];
+                $this->y = $row["Y"];
+            }
+        }
+
     }
 
     function putOnMap ($map) {

@@ -2,6 +2,7 @@
 
 include "header.inc.php";
 include "team.class.php";
+include "map.class.php";
 include "database.inc.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -12,20 +13,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (array_key_exists("confirm", $_POST)) {
         if ($_POST["confirm"] == "yes") {
+            $team = new Team(playerTeamId, false);
+            $map = new Map();
+
             $conn = new mysqli(db_host, db_user, db_password, db_name);
             $conn->query("INSERT INTO PUSHUP (USER_ID, FULL, KNEE, WALL) VALUES (".playerId.", $full, $knee, $wall)");
             //calculate points for each exercise type and update the team score.
             $newPoints = $full;
             $newPoints += $knee * 0.5;
             $newPoints += $wall * 0.25;
-            $currentPoints = $conn->query("SELECT POINTS FROM TEAM WHERE ID=".playerTeamId)->fetch_object()->POINTS;
+            $currentPoints = $team->getPoints();
             $totalPoints = $currentPoints + $newPoints;
-            $toLeave = $conn->query("SELECT TOLEAVE FROM MAP WHERE Y=(SELECT POSITION_Y FROM TEAM WHERE ID=".playerTeamId.") AND X=(SELECT POSITION_X FROM TEAM WHERE ID=".playerTeamId.")")->fetch_object()->TOLEAVE;
+            $toLeave = $team->getPointsNeeded($map);
             $maxPoints = $toLeave * 1.5;
             if ($totalPoints > $maxPoints) {
                 $totalPoints = $maxPoints;
             }
-            $conn->query("UPDATE TEAM SET POINTS=$totalPoints WHERE ID".playerTeamId);
+            $conn->query("UPDATE TEAM SET POINTS=$totalPoints WHERE ID=".playerTeamId);
             echo "Points Updated!";
             header('Location: main.php');
             die();

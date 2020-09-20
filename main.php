@@ -40,11 +40,16 @@ if ($map->drawTeamsAtStart()) {
 }
 echo "<hr><p>";
 
-//TODO: Query database using below query
-//Create a table recording the history of the movement of a team
-//Make sure when a team moves, this table is being updated.
-//Create a query here to show these moves as well.
 $conn = new mysqli(db_host, db_user, db_password, db_name);
+
+$queryResult = $conn->query("SELECT FLAG, TEAM.NAME AS TEAM_NAME, USER.NAME AS USER_NAME, X, Y, DATETIME FROM TEAM_MOVE LEFT JOIN TEAM ON TEAM_MOVE.TEAM_ID=TEAM.ID LEFT JOIN USER ON TEAM_MOVE.USER_ID=USER.ID ORDER BY DATETIME DESC LIMIT 5");
+while ($row = $queryResult->fetch_assoc()) {
+    echo "<img src='team_flags/".$row["FLAG"]."'>";
+    echo "Team ".$row["TEAM_NAME"]." was moved to X: ".$row["X"]." and Y: ".$row["Y"];
+    echo " by ".$row["USER_NAME"]." - <i>".$row["DATETIME"]."</i><br>";
+}
+echo "<hr>";
+
 $queryResult = $conn->query("SELECT USER.NAME AS USER_NAME, TEAM.NAME AS TEAM_NAME, FLAG, DATETIME, FULL, KNEE, WALL FROM PUSHUP LEFT JOIN USER ON PUSHUP.USER_ID = USER.ID LEFT JOIN TEAM ON USER.TEAM_ID = TEAM.ID WHERE PRIVACY=3 OR (PRIVACY=2 AND TEAM.ID=".playerTeamId.") OR (PRIVACY=1 AND TEAM.CAPTAIN = ".playerId.") OR (USER.ID = ".playerId.") ORDER BY DATETIME DESC LIMIT 10");
 
 while ($row = $queryResult->fetch_assoc()) {

@@ -39,7 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $updatedPoints = $teamPoints - $pointsNeeded;
                 $moveY = $moveYX["y"];
                 $moveX = $moveYX["x"];
-                $conn->query("UPDATE TEAM SET POINTS=$updatedPoints, POSITION_Y=$moveY, POSITION_X=$moveX WHERE ID=".playerTeamId);
+                $conn->query("UPDATE TEAM SET POINTS=$updatedPoints WHERE ID=".playerTeamId);
+                $conn->query("INSERT INTO TEAM_MOVE (TEAM_ID, USER_ID, X, Y) VALUES (".playerTeamId.", ".playerId.", $moveX, $moveY)");
                 echo "Movement Updated!";
                 header('Location: main.php');
             }

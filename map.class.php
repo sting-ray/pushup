@@ -33,7 +33,7 @@ class Map {
     function drawTeamsAtStart() {
         $result = "";
         foreach($this->teamsAtStart as $team) {
-            $result .= $team;
+            $result .= $team." ";
         }
         return $result;
     }
