@@ -26,7 +26,15 @@ class Map {
             }
             $result .= "</tr>";
         }
-        $result .= "</table>";
+        $result .= "</table><br>";
+        return $result;
+    }
+
+    function drawTeamsAtStart() {
+        $result = "";
+        foreach($this->teamsAtStart as $team) {
+            $result .= $team;
+        }
         return $result;
     }
 
@@ -61,6 +69,10 @@ class Map {
     function updateTile($y, $x, $status, $image) {
         $this->mapYX[$y][$x]["status"] = $status;
         $this->mapYX[$y][$x]["image"] = $image;
+    }
+
+    function updateStartTeam($image) {
+        array_push($this->teamsAtStart, $image);
     }
 
     function getRaw() {

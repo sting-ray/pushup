@@ -4,8 +4,7 @@
 function makeTeams() {
     $team = array();
     $conn = new mysqli(db_host, db_user, db_password, db_name);
-    $queryResult = $conn->query("SELECT * FROM TEAM");
-    //TODO: left join the user table so the captain can have a name and pull this into the team class.
+    $queryResult = $conn->query("SELECT TEAM.ID, TEAM.NAME, CAPTAIN, FLAG, POSITION_X, POSITION_Y, POINTS, USER.NAME AS CAPTAIN_NAME FROM TEAM LEFT JOIN USER ON TEAM.CAPTAIN = USER.ID;");
     while ($row = $queryResult->fetch_assoc()) {
         $team[$row["ID"]] = new Team($row);
     }
@@ -16,7 +15,8 @@ function makeTeams() {
 class Team {
     private $id;
     private $name;
-    private $captain;
+    private $captainId;
+    private $captainName;
     private $flagImg;
     private $x;
     private $y;
@@ -25,7 +25,8 @@ class Team {
     function __construct($values) {
         $this->id = $values["ID"];
         $this->name = $values["NAME"];
-        $this->captain = $values["CAPTAIN"];
+        $this->captainId = $values["CAPTAIN"];
+        $this->captainName = $values["CAPTAIN_NAME"];
         $this->flagImg = "<img src='team_flags/".$values["FLAG"]."'>";
         $this->x = $values["POSITION_X"];
         $this->y = $values["POSITION_Y"];
@@ -40,7 +41,7 @@ class Team {
                 $map->updateTile($this->y,$this->x,2,$this->flagImg);
                 break;
             case 3:
-                //update for teams at start
+                $map->updateStartTeam($this->flagImg);
                 break;
             case 4:
                 //update for teams at finish
@@ -114,5 +115,9 @@ class Team {
 
     function getId() {
         return $this->id;
+    }
+
+    function getCaptainName() {
+        return $this->captainName;
     }
 }

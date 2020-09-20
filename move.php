@@ -15,16 +15,16 @@ foreach ($team as $t) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_GET["move"]) && $_POST["confirm"] == "yes") {
         $move = fixInput($_GET["move"]);
-        $teamPoints = $team[$playerTeam]->getPoints();
+        $teamPoints = $team[playerTeamId]->getPoints();
         switch ($move) {
             case "up":
             case "up_left":
             case "up_right":
-                $pointsNeeded = $team[$playerTeam]->getPointsNeeded($map);
+                $pointsNeeded = $team[playerTeamId]->getPointsNeeded($map);
                 break;
             case "left":
             case "right":
-                $pointsNeeded = ($team[$playerTeam]->getPointsNeeded($map) / 2);
+                $pointsNeeded = ($team[playerTeamId]->getPointsNeeded($map) / 2);
                 break;
             default:
                 echo "Invalid move!";
@@ -33,13 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 break;
         }
         if ($teamPoints >= $pointsNeeded) {
-            $moveYX = $team[$playerTeam]->calculateMovement($map, $move);
+            $moveYX = $team[playerTeamId]->calculateMovement($map, $move);
             if ($moveYX) {
                 $conn = new mysqli(db_host, db_user, db_password, db_name);
                 $updatedPoints = $teamPoints - $pointsNeeded;
                 $moveY = $moveYX["y"];
                 $moveX = $moveYX["x"];
-                $conn->query("UPDATE TEAM SET POINTS=$updatedPoints, POSITION_Y=$moveY, POSITION_X=$moveX WHERE ID=$playerTeam");
+                $conn->query("UPDATE TEAM SET POINTS=$updatedPoints, POSITION_Y=$moveY, POSITION_X=$moveX WHERE ID=".playerTeamId);
                 echo "Movement Updated!";
                 header('Location: main.php');
             }
@@ -54,16 +54,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 else if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (!empty($_GET["move"])) {
         $move = fixInput($_GET["move"]);
-        $teamPoints = $team[$playerTeam]->getPoints();
+        $teamPoints = $team[playerTeamId]->getPoints();
         switch ($move) {
             case "up":
             case "up_left":
             case "up_right":
-                $pointsNeeded = $team[$playerTeam]->getPointsNeeded($map);
+                $pointsNeeded = $team[playerTeamId]->getPointsNeeded($map);
                 break;
             case "left":
             case "right":
-                $pointsNeeded = ($team[$playerTeam]->getPointsNeeded($map) / 2);
+                $pointsNeeded = ($team[playerTeamId]->getPointsNeeded($map) / 2);
                 break;
             default:
                 echo "Invalid move!";
@@ -73,7 +73,7 @@ else if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         if ($teamPoints >= $pointsNeeded) {
-            if (!$team[$playerTeam]->calculateMovement($map, $move)) {
+            if (!$team[playerTeamId]->calculateMovement($map, $move)) {
                 echo "Invalid move!";
                 header('Location: main.php');
                 die();

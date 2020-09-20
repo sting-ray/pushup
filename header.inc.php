@@ -12,10 +12,11 @@ if(!$_SESSION["pushup_team"]) {
     die();
 }
 
-$playerId = $_SESSION["pushup_id"];
-$playerName = $_SESSION["pushup_name"];
-$playerTeam = $_SESSION["pushup_team"];
-
+define("playerId", $_SESSION["pushup_id"]);
+define("playerName", $_SESSION["pushup_name"]);
+define("playerTeamId", $_SESSION["pushup_team"]);
+//TODO: Create a page with the players individual stats
+//TODO: Create a settings page where the privacy setting can be updated and the password changed.
 ?>
 
 <html>
@@ -34,12 +35,13 @@ td {
 <body>
 
 <?php
-echo "Hello: $playerName<br>";
+echo "Hello: ".playerName."<br>";
 ?>
 
 <table><tr>
     <td><a href='main.php'>Main Page</a></td>
     <td><a href='pushup.php'>Enter Pushups</a></td>
     <td><a href='team.php'>Team Details</a></td>
+    <td><a href='future.php'>Future Ideas</a></td>
     <td><a href='logout.php'>Log Out</a></td>
 </tr></table><br>
