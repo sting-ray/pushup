@@ -66,7 +66,7 @@ while ($row = $queryResult->fetch_assoc()) {
             echo " and ".$row["KNEE"]." Pushups from the Knees";
         }
         else {
-            $row["KNEE"]." Pushups from the Knees";
+            echo $row["KNEE"]." Pushups from the Knees";
         }
     }
     if ($row["WALL"] > 0) {

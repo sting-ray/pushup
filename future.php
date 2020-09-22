@@ -18,4 +18,6 @@ Ability to join a team straight away from registration page - YenPeng<br>
 <i>Looking at ways to improve this.  Want to vet all new players, but agree signup need to be streamlined more</i><p>
 
 Random bomb tile.  When you land on a tile, it is revelead to be a bomb and sends you back to the start. - Andy<br>
-<i>Should be easier to program.  However back to start is a little harsh.  Maybe a random trap tile that means you need to do more pushups than exptected to move on.</i>
+<i>Should be easier to program.  However back to start is a little harsh.  Maybe a random trap tile that means you need to do more pushups than exptected to move on.</i><p>
+
+Better explanation of what the rules of the competition are, what the aim of the game is etc.  Make this clear on the main page - Hana<br>

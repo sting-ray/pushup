@@ -28,7 +28,7 @@ class Team {
         //Otherwise all values are expected to come in via values
         if ($allTeams == false) {
             $conn = new mysqli(db_host, db_user, db_password, db_name);
-            $values = $conn->query("SELECT TEAM.ID, TEAM.NAME, CAPTAIN, FLAG, START_X, START_Y, POINTS, USER.NAME AS CAPTAIN_NAME FROM TEAM LEFT JOIN USER ON TEAM.CAPTAIN = USER.ID WHERE TEAM_ID=$values")->fetch_assoc();
+            $values = $conn->query("SELECT TEAM.ID, TEAM.NAME, CAPTAIN, FLAG, START_X, START_Y, POINTS, USER.NAME AS CAPTAIN_NAME FROM TEAM LEFT JOIN USER ON TEAM.CAPTAIN = USER.ID WHERE TEAM.ID=$values")->fetch_assoc();
         }
 
         $this->id = $values["ID"];
@@ -43,12 +43,12 @@ class Team {
         if ($position) {
             $conn = new mysqli(db_host, db_user, db_password, db_name);
             $queryResult = $conn->query("SELECT X, Y FROM TEAM_MOVE WHERE TEAM_ID=".$this->id." ORDER BY DATETIME DESC LIMIT 1");
-            if ($row = $queryResult->fetch_assoc()) {
-                $this->x = $row["X"];
-                $this->y = $row["Y"];
+            if ($queryResult->num_rows == 1) {
+                $newLocation = $queryResult->fetch_assoc();
+                $this->x = $newLocation["X"];
+                $this->y = $newLocation["Y"];
             }
         }
-
     }
 
     function putOnMap ($map) {

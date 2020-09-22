@@ -22,10 +22,14 @@ define("playerTeamId", $_SESSION["pushup_team"]);
 <html>
 <head>
 <style>
+
 table {
     border: 1px solid black;
+    border-spacing: 0px;
+    border-collapse: collapse;
 }
 td {
+    padding: 0px;
     border: 1px solid black;
     //height:50px;
     //width:50px;
@@ -43,5 +47,6 @@ echo "Hello: ".playerName."<br>";
     <td><a href='pushup.php'>Enter Pushups</a></td>
     <td><a href='team.php'>Team Details</a></td>
     <td><a href='future.php'>Future Ideas</a></td>
+    <td><a href='settings.php'>Settings</a></td>
     <td><a href='logout.php'>Log Out</a></td>
 </tr></table><br>
