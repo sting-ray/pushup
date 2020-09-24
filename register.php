@@ -12,7 +12,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (queryDatabase("SELECT ID FROM USER WHERE EMAIL='$email'") == null) {
             $sql = "INSERT INTO USER (NAME, EMAIL, PASSWORD, SPONSER, PRIVACY) VALUES ('$name','$email','$password','$sponser', '$privacy');";
             if (updateDatabase($sql)) {
-                echo "New record created successfully";
+                echo "Thank you for registering.<br>";
+                echo "<b>You will now need for an admin to verify you and add you to a team</b><p>";
+                echo "Once you have been added to a team you will be able to login from the front page, <a href='index.php'>here.</a><br>";
+                echo "In the meantime, here are the instrustions for the competition:<p>";
+                include "help.html";
+
             }
         }
         else {

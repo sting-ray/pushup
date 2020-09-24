@@ -18,11 +18,11 @@ class Map {
     }
 
     function drawMap() {
-        $result = "<table>";
+        $result = "<table class='map'>";
         foreach ($this->mapYX as $y => $mapX) {
             $result .= "<tr>";
             foreach ($mapX as $x => $map) {
-                $result .= "<td title='Points needed to move off this tile: ".$map["toLeave"]."'>".$map["image"]."</td>";
+                $result .= "<td class='map' title='Points needed to move off this tile: ".$map["toLeave"]."'>".$map["image"]."</td>";
             }
             $result .= "</tr>";
         }
@@ -34,6 +34,18 @@ class Map {
         $result = "";
         foreach($this->teamsAtStart as $team) {
             $result .= $team." ";
+        }
+        return $result;
+    }
+
+    function drawTeamsAtFinish() {
+        //TODO: how to order a 2d array?
+        //$this->teamsAtFinish[id][datetime]
+        //needs to be ordered by datetime column.
+
+        $result = "";
+        foreach ($this->teamsAtFinish as $team) {
+            $result .= $team["image"]." ";
         }
         return $result;
     }
@@ -73,6 +85,11 @@ class Map {
 
     function updateStartTeam($image) {
         array_push($this->teamsAtStart, $image);
+    }
+
+    function updateFinishTeam($id, $image, $dateTime) {
+        $this->teamsAtFinish[$id]['image'] = $image;
+        $this->teamsAtFinish[$id]['dateTime'] = $dateTime;
     }
 
     function getRaw() {

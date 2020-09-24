@@ -16,37 +16,35 @@ define("playerId", $_SESSION["pushup_id"]);
 define("playerName", $_SESSION["pushup_name"]);
 define("playerTeamId", $_SESSION["pushup_team"]);
 //TODO: Create a page with the players individual stats
-//TODO: Create a settings page where the privacy setting can be updated and the password changed.
+
+
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
-<style>
-
-table {
-    border: 1px solid black;
-    border-spacing: 0px;
-    border-collapse: collapse;
-}
-td {
-    padding: 0px;
-    border: 1px solid black;
-    //height:50px;
-    //width:50px;
-}
-</style>
+    <link rel='stylesheet' href='default.css'>
 </head>
+
 <body>
 
 <?php
 echo "Hello: ".playerName."<br>";
+
 ?>
 
-<table><tr>
-    <td><a href='main.php'>Main Page</a></td>
-    <td><a href='pushup.php'>Enter Pushups</a></td>
-    <td><a href='team.php'>Team Details</a></td>
-    <td><a href='future.php'>Future Ideas</a></td>
-    <td><a href='settings.php'>Settings</a></td>
-    <td><a href='logout.php'>Log Out</a></td>
-</tr></table><br>
+<div class="pill-nav">
+    <a href='main.php' id='main.php'>Main Page</a>
+    <a href='pushup.php' id='pushup.php'>Enter Pushups</a>
+    <a href='team.php' id='team.php'>Team Details</a>
+    <a href='help.php' id='help.php'>Help Page</a>
+    <a href='future.php' id='future.php'>Future Ideas</a>
+    <a href='settings.php' id='settings.php'>Settings</a>
+    <a href='logout.php' id='logout.php'>Log Out</a>
+</div>
+
+<script>
+    var path = window.location.pathname;
+    var page = path.split('/').pop();
+    document.getElementById(page).className = 'active';
+</script>

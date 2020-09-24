@@ -1,6 +1,8 @@
 <?php
 
 include "database.inc.php";
+include "team.class.php";
+include "map.class.php";
 
 session_start();
 
@@ -9,6 +11,14 @@ if (isset($_SESSION["pushup_id"])) {
     echo "re-directing to main.php";
     die();
 }
+
+echo "
+<!DOCTYPE html>
+<html>
+<head>
+<link rel='stylesheet' href='default.css'>
+</head>";
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($_POST["email"]) && !empty($_POST["password"])) {
@@ -38,6 +48,20 @@ else {
         Password: <input type='password' name='password'><br>
         <input type='submit'><p>
 
-        <a href='register.php'>Signup as a new user</a>
+        <a href='register.php'>Signup as a new user</a><br>
+        <a href='help.html'>The rules of this competition</a><p>
     ";
+}
+
+$map = new Map();
+$team = makeTeams(); //returns array
+
+foreach ($team as $t) {
+    $t->putOnMap($map);
+}
+
+echo $map->drawMap()."<br>";
+echo "<br>";
+if ($map->drawTeamsAtStart()) {
+    echo "Teams at Start: <br>" . $map->drawTeamsAtStart();
 }

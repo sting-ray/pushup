@@ -21,6 +21,7 @@ class Team {
     private $x;
     private $y;
     private $points;
+    private $moveDateTime;
 
     function __construct($values, $allTeams = true, $position = true) {
 
@@ -42,11 +43,12 @@ class Team {
 
         if ($position) {
             $conn = new mysqli(db_host, db_user, db_password, db_name);
-            $queryResult = $conn->query("SELECT X, Y FROM TEAM_MOVE WHERE TEAM_ID=".$this->id." ORDER BY DATETIME DESC LIMIT 1");
+            $queryResult = $conn->query("SELECT X, Y, DATETIME FROM TEAM_MOVE WHERE TEAM_ID=".$this->id." ORDER BY DATETIME DESC LIMIT 1");
             if ($queryResult->num_rows == 1) {
                 $newLocation = $queryResult->fetch_assoc();
                 $this->x = $newLocation["X"];
                 $this->y = $newLocation["Y"];
+                $this->moveDateTime = $newLocation["DATETIME"];
             }
         }
     }
@@ -62,7 +64,7 @@ class Team {
                 $map->updateStartTeam($this->flagImg);
                 break;
             case 4:
-                //update for teams at finish
+                $map->updateFinishTeam($this->id, $this->flagImg, $this->moveDateTime);
                 break;
         }
     }

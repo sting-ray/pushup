@@ -33,6 +33,9 @@ echo "Your team has: ".$team[playerTeamId]->getPoints()." points out of a maximu
 echo "Your team needs: ".$team[playerTeamId]->getPointsNeeded($map)." points to move forwards.<br>";
 echo "Your team needs: ".($team[playerTeamId]->getPointsNeeded($map) / 2)." points to move sideways.<br>";
 
+if ($map->drawTeamsAtFinish()){
+    echo "<br>Teams at Finish: <br>" . $map->drawTeamsAtFinish();
+}
 echo $map->drawMap()."<br>";
 echo "<br>";
 if ($map->drawTeamsAtStart()) {
