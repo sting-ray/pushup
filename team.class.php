@@ -64,7 +64,7 @@ class Team {
                 $map->updateStartTeam($this->flagImg);
                 break;
             case 4:
-                $map->updateFinishTeam($this->id, $this->flagImg, $this->moveDateTime);
+                $map->updateFinishTeam($this->id, $this->moveDateTime);
                 break;
         }
     }
@@ -104,13 +104,14 @@ class Team {
                     $map->updateTile($move["y"], $move["x"], 2, "<a href='move.php?move=$direction'><img src='icons/$direction.png'></a>");
                     return $move;
                     break;
+                //case 1: there is a block tile stopping movement. - Will go to Default.
                 case 2:
                     //other team exists, do nothing and loop again.
                     break;
                 case 4:
                     //end is within reach!
                     //later on may use a different tile icon for this significant event
-                    $map->updateTile($move["y"], $move["x"], 2, "<a href='move.php?move=$direction'><img src='icons/$direction.png'></a>");
+                    $map->updateTile($move["y"], $move["x"], 2, "<a href='move.php?move=$direction'><img src='icons/finish_move.png'></a>");
                     return $move;
                     break;
                 default:

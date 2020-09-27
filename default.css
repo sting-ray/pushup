@@ -30,19 +30,20 @@ table.map {
     border-collapse: collapse;
 }
 
-tr.map {
+table.map tr {
     line-height: 50px;
 }
 
 /*https://developer.mozilla.org/en-US/docs/Archive/Misc_top_level/Images,_Tables,_and_Mysterious_Gaps*/
-td.map img {
+table.map img {
     display: block;
 }
 
-td.map {
+table.map td {
     padding: 0px;
     border: 1px solid black;
 }
+
 
 /*Header*/
 /*https://freefrontend.com/css-3d-text-effects/*/

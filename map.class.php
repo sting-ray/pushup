@@ -17,12 +17,35 @@ class Map {
         }
     }
 
+    function drawEverything($teamArray, $draw = true) {
+        $result = "";
+        if (!empty($this->teamsAtFinish)) {
+            $result .= "Teams at finish:<br>";
+            $result .= $this->drawTeamsAtFinish($teamArray);
+            $result .= "<br>";
+        }
+        $result .= $this->drawMap();
+        $result .= "<br>";
+        if (!empty($this->teamsAtStart)) {
+            $result .= "Teams at start:<br>";
+            $result .= $this->drawTeamsAtStart();
+            $result .= "<br>";
+        }
+        if ($draw) {
+            echo $result;
+            return true;
+        }
+        else {
+            return $result;
+        }
+    }
+
     function drawMap() {
         $result = "<table class='map'>";
         foreach ($this->mapYX as $y => $mapX) {
             $result .= "<tr>";
             foreach ($mapX as $x => $map) {
-                $result .= "<td class='map' title='Points needed to move off this tile: ".$map["toLeave"]."'>".$map["image"]."</td>";
+                $result .= "<td title='Points needed to move off this tile: ".$map["toLeave"]."'>".$map["image"]."</td>";
             }
             $result .= "</tr>";
         }
@@ -38,15 +61,31 @@ class Map {
         return $result;
     }
 
-    function drawTeamsAtFinish() {
-        //TODO: how to order a 2d array?
-        //$this->teamsAtFinish[id][datetime]
-        //needs to be ordered by datetime column.
-
-        $result = "";
-        foreach ($this->teamsAtFinish as $team) {
-            $result .= $team["image"]." ";
+    function drawTeamsAtFinish($teamArray) {
+        $result = "<table><tr>";
+        ksort($this->teamsAtFinish);
+        $position = 1;
+        foreach ($this->teamsAtFinish as $dateTime => $teamId) {
+            $result .= "<td>".$teamArray[$teamId]->getFlag();
+            switch ($position) {
+                case 1:
+                    $result .= "<br>1st: ";
+                    break;
+                case 2:
+                    $result .= "<br>2nd: ";
+                    break;
+                case 3:
+                    $result .= "<br>3rd: ";
+                    break;
+                default:
+                    $result .="<br>";
+                    break;
+            }
+            $position++;
+            $result .= $teamArray[$teamId]->getName();
+            $result .= "<br><small>".$dateTime."</small></td>";
         }
+        $result .= "</tr></table>";
         return $result;
     }
 
@@ -87,9 +126,8 @@ class Map {
         array_push($this->teamsAtStart, $image);
     }
 
-    function updateFinishTeam($id, $image, $dateTime) {
-        $this->teamsAtFinish[$id]['image'] = $image;
-        $this->teamsAtFinish[$id]['dateTime'] = $dateTime;
+    function updateFinishTeam($id, $datetime) {
+        $this->teamsAtFinish[$datetime] = $id ;
     }
 
     function getRaw() {

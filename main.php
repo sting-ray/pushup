@@ -29,18 +29,17 @@ echo "Your team is<br>";
 echo $team[playerTeamId]->getFlag()."<br>";
 echo $team[playerTeamId]->getName()."<p>";
 
-echo "Your team has: ".$team[playerTeamId]->getPoints()." points out of a maximum: ".($team[playerTeamId]->getPointsNeeded($map) * 1.5)."<br>";
+$maxPoints = $team[playerTeamId]->getPointsNeeded($map) * 1.5;
+if ($maxPoints == 0) {
+    $maxPoints = "unlimited";
+}
+
+echo "Your team has: ".$team[playerTeamId]->getPoints()." points out of a maximum: ".$maxPoints."<br>";
 echo "Your team needs: ".$team[playerTeamId]->getPointsNeeded($map)." points to move forwards.<br>";
 echo "Your team needs: ".($team[playerTeamId]->getPointsNeeded($map) / 2)." points to move sideways.<br>";
 
-if ($map->drawTeamsAtFinish()){
-    echo "<br>Teams at Finish: <br>" . $map->drawTeamsAtFinish();
-}
-echo $map->drawMap()."<br>";
-echo "<br>";
-if ($map->drawTeamsAtStart()) {
-    echo "Teams at Start: <br>" . $map->drawTeamsAtStart();
-}
+$map->drawEverything($team);
+
 echo "<hr><p>";
 
 $conn = new mysqli(db_host, db_user, db_password, db_name);

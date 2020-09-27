@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $totalPoints = $currentPoints + $newPoints;
             $toLeave = $team->getPointsNeeded($map);
             $maxPoints = $toLeave * 1.5;
-            if ($totalPoints > $maxPoints) {
+            if ($totalPoints > $maxPoints && $maxPoints != 0) {
                 $totalPoints = $maxPoints;
             }
             $conn->query("UPDATE TEAM SET POINTS=$totalPoints WHERE ID=".playerTeamId);

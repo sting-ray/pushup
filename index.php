@@ -60,8 +60,4 @@ foreach ($team as $t) {
     $t->putOnMap($map);
 }
 
-echo $map->drawMap()."<br>";
-echo "<br>";
-if ($map->drawTeamsAtStart()) {
-    echo "Teams at Start: <br>" . $map->drawTeamsAtStart();
-}
+$map->drawEverything($team);
