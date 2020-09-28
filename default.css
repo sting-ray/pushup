@@ -17,6 +17,9 @@
 .pill-nav a:hover {
     background-color: #ddd;
     color: black;
+    text-shadow: 5px 5px 5px #919191;
+    border: dodgerblue solid;
+    font-size: 15px;
 }
 
 .pill-nav a.active {

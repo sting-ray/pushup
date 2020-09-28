@@ -14,6 +14,49 @@ function makePassword($password) {
     return $fixedPassword;
 }
 
+function expandSeconds($totalSeconds) {
+    $days = floor($totalSeconds / 86400);
+    $totalSeconds = ($totalSeconds % 86400);
+    $hours = floor($totalSeconds / 3600);
+    $totalSeconds %= 3600;
+    $minutes = floor($totalSeconds / 60);
+    $totalSeconds %= 60;
+    $seconds = floor($totalSeconds);
+
+    $result = "";
+    if ($days) {
+        if ($days == 1) {
+            $result .= "$days day, ";
+        }
+        else {
+            $result .= "$days days, ";
+        }
+    }
+    if ($hours) {
+        if ($hours == 1) {
+            $result .= "$hours hour, ";
+        }
+        else {
+            $result .= "$hours hours, ";
+        }
+    }
+    if ($minutes) {
+        if ($minutes ==1) {
+            $result .= "$minutes minute and ";
+        }
+        else {
+            $result .= "$minutes minutes and ";
+        }
+    }
+    if ($seconds == 1) {
+        $result .= "$seconds second";
+    }
+    else {
+        $result .= "$seconds seconds";
+    }
+    return $result;
+}
+
 function updateDatabase($sql) {
     $conn = new mysqli(db_host, db_user, db_password, db_name);
     if ($conn->connect_error) {

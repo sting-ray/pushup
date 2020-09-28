@@ -5,6 +5,7 @@ include "team.class.php";
 include "map.class.php";
 
 session_start();
+$conn = new mysqli(db_host, db_user, db_password, db_name);
 
 if (isset($_SESSION["pushup_id"])) {
     header('Location: main.php');
@@ -38,19 +39,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 else {
-    echo "
-        <html>
+    $seconds = $conn->query("SELECT TIMESTAMPDIFF(SECOND, now(), (SELECT START FROM SETTINGS LIMIT 1)) AS SECONDS")->fetch_object()->SECONDS;
+    if ($seconds < 0 || $seconds == null) {
+        echo "
         <body>
         <h1>Pushup</h1><p>
         <h2>login:</h2><br>
         <form action='index.php' method='post'>
         Email: <input type='text' name='email'><br>
         Password: <input type='password' name='password'><br>
-        <input type='submit'><p>
+        <input type='submit'><p>";
+    }
+    else {
+        echo "<body><h1>Pushup</h1><p>";
+        echo "Competition has not started yet<br>";
+        echo "Login will be available in: ".expandSeconds($seconds).".<p>";
+    }
 
-        <a href='register.php'>Signup as a new user</a><br>
-        <a href='help.html'>The rules of this competition</a><p>
-    ";
+    echo "<a href='register.php'>Signup as a new user</a><br>";
+    echo "<a href='help.html'>The rules of this competition</a><p>";
+
 }
 
 $map = new Map();

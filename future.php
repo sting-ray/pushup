@@ -20,4 +20,8 @@ Ability to join a team straight away from registration page - YenPeng<br>
 Random bomb tile.  When you land on a tile, it is revelead to be a bomb and sends you back to the start. - Andy<br>
 <i>Should be easier to program.  However back to start is a little harsh.  Maybe a random trap tile that means you need to do more pushups than exptected to move on.</i><p>
 
-Better explanation of what the rules of the competition are, what the aim of the game is etc.  Make this clear on the main page - Hana<br>
+<b>Implemented:</b> A time limit to stop people spamming pushups into the system<br>
+<i>introduced a limit of 1 pushup entry per 5 minutes.</i><p>
+
+<b>Implemented:</b> Better explanation of what the rules of the competition are, what the aim of the game is etc.  Make this clear on the main page - Hana<br>
+<i>Created a help page, and also a pushup help page that is linked when you go to put in pushups.</i>

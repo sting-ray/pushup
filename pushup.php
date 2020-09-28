@@ -47,20 +47,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     else {
-        echo "<h1>Confirm Pushup Amount</h1><br>";
-        echo "Please confirm these are the correct amounts of pushups that you did.<br>";
-        echo "If you made a mistake you can select no to enter in the correct amounts.<br>";
-        echo "<b>Please be honest!</b><br>";
-        echo "<b>Full</b> Pushups: <b>$full</b><br>";
-        echo "<b>Knee</b> Pushups: <b>$knee</b><br>";
-        echo "<b>Wall</b> Pushups: <b>$wall</b><br>";
-        echo "Is this the correct amount?";
-        echo "<form action='pushup.php' method='post'>";
-        echo "<input type='hidden' name='full' value='$full'>";
-        echo "<input type='hidden' name='knee' value='$knee'>";
-        echo "<input type='hidden' name='wall' value='$wall'>";
-        echo "<input type='radio' name='confirm' value='yes' checked>Yes! || ";
-        echo "<input type='radio' name='confirm' value='no'>No! <input type='submit'></form><br>";
+        //check to make sure there is at least a 5 minute gap between submissions.
+        $conn = new mysqli(db_host, db_user, db_password, db_name);
+        $seconds = $conn->query("SELECT TIMESTAMPDIFF(SECOND, (SELECT DATETIME FROM PUSHUP WHERE USER_ID=".playerId." ORDER BY DATETIME DESC LIMIT 1), now()) AS SECONDS")->fetch_object()->SECONDS;
+        if ($seconds > 300 || $seconds == null) {
+            echo "<h1>Confirm Pushup Amount</h1><br>";
+            echo "Please confirm these are the correct amounts of pushups that you did.<br>";
+            echo "If you made a mistake you can select no to enter in the correct amounts.<br>";
+            echo "<b>Please be honest!</b><br>";
+            echo "<b>Full</b> Pushups: <b>$full</b><br>";
+            echo "<b>Knee</b> Pushups: <b>$knee</b><br>";
+            echo "<b>Wall</b> Pushups: <b>$wall</b><br>";
+            echo "Is this the correct amount?";
+            echo "<form action='pushup.php' method='post'>";
+            echo "<input type='hidden' name='full' value='$full'>";
+            echo "<input type='hidden' name='knee' value='$knee'>";
+            echo "<input type='hidden' name='wall' value='$wall'>";
+            echo "<input type='radio' name='confirm' value='yes' checked>Yes! || ";
+            echo "<input type='radio' name='confirm' value='no'>No! <input type='submit'></form><br>";
+        }
+        else {
+            echo "<h1>Confirm Pushup Amount</h1><br>";
+            echo "You have just entered in your pushups just ".expandSeconds($seconds)." ago.<br>";
+            echo "There is a limit of 1 entry every 5 minutes<br>";
+        }
+
+
     }
 }
 else {

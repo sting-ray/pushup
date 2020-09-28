@@ -34,11 +34,12 @@ echo "Hello: ".playerName."<br>";
 ?>
 
 <div class="pill-nav">
-    <a href='main.php' id='main.php'>Main Page</a>
-    <a href='pushup.php' id='pushup.php'>Enter Pushups</a>
-    <a href='team.php' id='team.php'>Team Details</a>
-    <a href='help.php' id='help.php'>Help Page</a>
-    <a href='future.php' id='future.php'>Future Ideas</a>
+    <a href='main.php' id='main.php'>Map</a>
+    <a href='pushup.php' id='pushup.php'>Pushups</a>
+    <a href='team.php' id='team.php'>Team</a>
+    <a href='individual.php' id='individual.php'>Individual</a>
+    <a href='help.php' id='help.php'>Help</a>
+    <a href='future.php' id='future.php'>Future</a>
     <a href='settings.php' id='settings.php'>Settings</a>
     <a href='logout.php' id='logout.php'>Log Out</a>
 </div>
