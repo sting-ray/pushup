@@ -31,6 +31,7 @@
 table.map {
     border-spacing: 0px;
     border-collapse: collapse;
+    margin-left: 10%;
 }
 
 table.map tr {
@@ -75,4 +76,17 @@ h1 {
 .alert {
     color:red;
     font-weight:bold;
+}
+
+/*For div spacing, currently used on the main/map page */
+
+div.left {
+    width: 500px;
+    float: left;
+}
+
+dif.right {
+    float: right;
+    width: 500px;
+    display: inline-block;
 }

@@ -25,6 +25,7 @@ if ($team[playerTeamId]->getPoints() >= ($team[playerTeamId]->getPointsNeeded($m
 
 echo "<h1>Main page</h1><br>";
 
+echo "<div class='left'>";
 echo "Your team is<br>";
 echo $team[playerTeamId]->getFlag()."<br>";
 echo $team[playerTeamId]->getName()."<p>";
@@ -38,12 +39,13 @@ echo "Your team has: ".$team[playerTeamId]->getPoints()." points out of a maximu
 echo "Your team needs: ".$team[playerTeamId]->getPointsNeeded($map)." points to move forwards.<br>";
 echo "Your team needs: ".($team[playerTeamId]->getPointsNeeded($map) / 2)." points to move sideways.<br>";
 
+
 $map->drawEverything($team);
 
-echo "<hr><p>";
+echo "</div><div class='right'>";
+//echo "<hr><p>";
 
 $conn = new mysqli(db_host, db_user, db_password, db_name);
-
 $queryResult = $conn->query("SELECT FLAG, TEAM.NAME AS TEAM_NAME, USER.NAME AS USER_NAME, X, Y, DATETIME FROM TEAM_MOVE LEFT JOIN TEAM ON TEAM_MOVE.TEAM_ID=TEAM.ID LEFT JOIN USER ON TEAM_MOVE.USER_ID=USER.ID ORDER BY DATETIME DESC LIMIT 5");
 while ($row = $queryResult->fetch_assoc()) {
     echo "<img src='team_flags/".$row["FLAG"]."'>";
@@ -81,3 +83,5 @@ while ($row = $queryResult->fetch_assoc()) {
     }
     echo " for team ".$row["TEAM_NAME"].". - <i>".$row["DATETIME"]."</i><br>";
 }
+
+echo "</div>";
