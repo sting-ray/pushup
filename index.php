@@ -52,7 +52,7 @@ else {
     }
     else {
         echo "<body><h1>Pushup</h1><p>";
-        echo "Competition has not started yet<br>";
+        echo "Competition has not started yet.<br>";
         echo "Login will be available in: ".expandSeconds($seconds).".<p>";
     }
 

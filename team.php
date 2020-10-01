@@ -40,7 +40,7 @@ while ($row = $queryResult->fetch_assoc()) {
     $user[$row["ID"]]["wall"] = 0;
 }
 
-$queryResult = $conn->query("SELECT USER.ID, FULL, KNEE, WALL FROM PUSHUP LEFT JOIN USER ON PUSHUP.USER_ID=USER.ID LEFT JOIN TEAM ON USER.TEAM_ID=TEAM.ID WHERE TEAM.ID=$selectedTeam AND (PRIVACY=3 OR (PRIVACY=2 AND TEAM.ID=".playerTeamId.") OR (PRIVACY=1 AND TEAM.CAPTAIN = ".playerId.") OR (USER.ID = 1))");
+$queryResult = $conn->query("SELECT USER.ID, FULL, KNEE, WALL FROM PUSHUP LEFT JOIN USER ON PUSHUP.USER_ID=USER.ID LEFT JOIN TEAM ON USER.TEAM_ID=TEAM.ID WHERE TEAM.ID=$selectedTeam AND (PRIVACY=4 OR (PRIVACY=3 AND TEAM.ID=".playerTeamId.") OR (PRIVACY=2 AND TEAM.CAPTAIN = ".playerId.") OR (USER.ID = ".playerId."))");
 while ($row = $queryResult->fetch_assoc()) {
     $user[$row["ID"]]["full"] += $row["FULL"];
     $user[$row["ID"]]["knee"] += $row["KNEE"];
