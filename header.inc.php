@@ -15,7 +15,6 @@ if(!$_SESSION["pushup_team"]) {
 define("playerId", $_SESSION["pushup_id"]);
 define("playerName", $_SESSION["pushup_name"]);
 define("playerTeamId", $_SESSION["pushup_team"]);
-//TODO: Create a page with the players individual stats
 
 
 ?>
