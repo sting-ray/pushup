@@ -90,3 +90,14 @@ dif.right {
     width: 500px;
     display: inline-block;
 }
+
+/*For images that need to be faded*/
+.faded {
+    opacity:0.3;
+}
+
+/*make text even smaller*/
+small.small {
+    font-size:8px;
+    font-weight:700;
+}
