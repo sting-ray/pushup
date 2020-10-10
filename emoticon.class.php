@@ -1,5 +1,6 @@
 <?php
 
+//For displaying the little smiling faces and other symbols next to a players work out.
 class Emoticons {
     private $emoticons = array();
 

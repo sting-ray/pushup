@@ -13,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $knee = 50;
     }
     $wall = fixInput($_POST["wall"]);
-    if ($wall > 20) {
-        $wall = 20;
+    if ($wall > 50) {
+        $wall = 50;
     }
 
     if (array_key_exists("confirm", $_POST)) {
@@ -26,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $conn->query("INSERT INTO PUSHUP (USER_ID, FULL, KNEE, WALL) VALUES (".playerId.", $full, $knee, $wall)");
             //calculate points for each exercise type and update the team score.
             $newPoints = $full;
-            $newPoints += $knee * 0.5;
-            $newPoints += $wall * 0.25;
+            $newPoints += $knee * 0.3;
+            $newPoints += $wall * 0.15;
             $currentPoints = $team->getPoints();
             $totalPoints = $currentPoints + $newPoints;
             $toLeave = $team->getPointsNeeded($map);
@@ -81,9 +81,9 @@ else {
     echo "<h1>Enter Pushups</h1><br>";
     echo "How many pushups have you just done?<br>";
     echo "<form action='pushup.php' method='post'>";
-    echo "Full body Pushups: <input type='number' name='full' min='0' max='10507' value='0'><br>";
-    echo "From the Knees: <input type='number' name='knee' min='0' max='50' value='0'><i>*Max 50 <small>per session</small></i><br>";
-    echo "If injured, from the wall: <input type='number' name='wall' min='0' max='20' value='0'><i>*Max 20 <small>per session</small></i><br>";
+    echo "Full Pushups: <input type='number' name='full' min='0' max='10507' value='0'><br>";
+    echo "Knee/Incline Pushups: <input type='number' name='knee' min='0' max='50' value='0'><i>*Max 50 <small>per session</small></i><br>";
+    echo "Wall Pushups: <input type='number' name='wall' min='0' max='50' value='0'><i>*Max 50 <small>per session</small></i><br>";
     echo "<input type='submit'><p>";
 }
 

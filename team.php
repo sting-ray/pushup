@@ -28,11 +28,12 @@ echo "Captain: ".$team[$selectedTeam]->getCaptainName()."<br>";
 echo "Points: ".$team[$selectedTeam]->getPoints()."<p>";
 
 echo "<h2>Players</h2><br>";
+echo "<i>Note: Players score will show 0 if they have set their privacy to not show their pushups</i><br>";
 
 $conn = new mysqli(db_host, db_user, db_password, db_name);
-$queryResult = $conn->query("SELECT USER.ID, NAME, EMAIL FROM USER WHERE TEAM_ID=$selectedTeam");
+$queryPlayers = $conn->query("SELECT USER.ID, NAME, EMAIL FROM USER WHERE TEAM_ID=$selectedTeam");
 
-while ($row = $queryResult->fetch_assoc()) {
+while ($row = $queryPlayers->fetch_assoc()) {
     $user[$row["ID"]]["name"] = $row["NAME"];
     $user[$row["ID"]]["email"] = $row["EMAIL"];
     $user[$row["ID"]]["full"] = 0;
@@ -40,20 +41,28 @@ while ($row = $queryResult->fetch_assoc()) {
     $user[$row["ID"]]["wall"] = 0;
 }
 
-$queryResult = $conn->query("SELECT USER.ID, FULL, KNEE, WALL FROM PUSHUP LEFT JOIN USER ON PUSHUP.USER_ID=USER.ID LEFT JOIN TEAM ON USER.TEAM_ID=TEAM.ID WHERE TEAM.ID=$selectedTeam AND (PRIVACY=4 OR (PRIVACY=3 AND TEAM.ID=".playerTeamId.") OR (PRIVACY=2 AND TEAM.CAPTAIN = ".playerId.") OR (USER.ID = ".playerId."))");
-while ($row = $queryResult->fetch_assoc()) {
-    $user[$row["ID"]]["full"] += $row["FULL"];
-    $user[$row["ID"]]["knee"] += $row["KNEE"];
-    $user[$row["ID"]]["wall"] += $row["WALL"];
+if (mysqli_num_rows($queryPlayers) > 0) {
+    $queryResult = $conn->query("SELECT USER.ID, FULL, KNEE, WALL FROM PUSHUP LEFT JOIN USER ON PUSHUP.USER_ID=USER.ID LEFT JOIN TEAM ON USER.TEAM_ID=TEAM.ID WHERE TEAM.ID=$selectedTeam AND (PRIVACY=4 OR (PRIVACY=3 AND TEAM.ID=".playerTeamId.") OR (PRIVACY=2 AND TEAM.CAPTAIN = ".playerId.") OR (USER.ID = ".playerId."))");
+
+    while ($row = $queryResult->fetch_assoc()) {
+        $user[$row["ID"]]["full"] += $row["FULL"];
+        $user[$row["ID"]]["knee"] += $row["KNEE"];
+        $user[$row["ID"]]["wall"] += $row["WALL"];
+    }
+
+    echo "<table><tr><th>Name</th><th>Email</th><th>Full</th><th>Knee</th><th>Wall</th></tr>";
+    foreach ($user as $row) {
+        echo "<tr><td>" . $row["name"] . "</td>";
+        echo "<td>" . $row["email"] . "</td>";
+        echo "<td>" . $row["full"] . "</td>";
+        echo "<td>" . $row["knee"] . "</td>";
+        echo "<td>" . $row["wall"] . "</td></tr>";
+    }
+    echo "</table>";
+}
+else {
+    echo "No Players on this team yet....";
 }
 
-echo "<table><tr><th>Name</th><th>Email</th><th>Full</th><th>Knee</th><th>Wall</th></tr>";
-foreach ($user as $row) {
-    echo "<tr><td>".$row["name"]."</td>";
-    echo "<td>".$row["email"]."</td>";
-    echo "<td>".$row["full"]."</td>";
-    echo "<td>".$row["knee"]."</td>";
-    echo "<td>".$row["wall"]."</td></tr>";
-}
 
-echo "</table>";
+

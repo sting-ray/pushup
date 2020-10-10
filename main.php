@@ -78,7 +78,7 @@ while ($row = $queryResult->fetch_assoc()) {
         echo $row["FULL"]." Full Pushups";
     }
     if ($row["KNEE"] > 0) {
-        if ($row["FULL"] > 0 && $row["WALL"] > 0) {
+        if ($row["FULL"] > 0 && ($row["WALL"] > 0 || $row["TABLE_HANDS"])) {
             echo ", ".$row["KNEE"]." Pushups from the Knees";
         }
         else if ($row["FULL"] > 0) {

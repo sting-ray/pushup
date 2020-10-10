@@ -26,5 +26,5 @@ Random bomb tile.  When you land on a tile, it is revelead to be a bomb and send
 <b>Implemented:</b> Better explanation of what the rules of the competition are, what the aim of the game is etc.  Make this clear on the main page - Hana<br>
 <i>Created a help page, and also a pushup help page that is linked when you go to put in pushups.</i><p>
 
-The ability to like somebody's workout.  (Chear and motivate your team mates) - YenPeng.<br>
-<i>Will want to get this implemented.  Need to decide if I do this in a simple fashion, e.g. 1 type of likes, or more complex, e.g. select from different like icons.</i>
+<b>Implemented:</b>The ability to like somebody's workout.  (Chear and motivate your team mates) - YenPeng.<br>
+<i>This has been implemented in a simplistic form for now.  Will want to expand upon this in future versions.</i>
