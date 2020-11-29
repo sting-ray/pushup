@@ -38,7 +38,6 @@ echo "Hello: ".playerName."<br>";
     <a href='team.php' id='team.php'>Team</a>
     <a href='individual.php' id='individual.php'>Individual</a>
     <a href='help.php' id='help.php'>Help</a>
-    <a href='future.php' id='future.php'>Future</a>
     <a href='settings.php' id='settings.php'>Settings</a>
     <a href='logout.php' id='logout.php'>Log Out</a>
 </div>
