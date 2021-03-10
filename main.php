@@ -30,10 +30,12 @@ if ($team[playerTeamId]->getPoints() >= $team[playerTeamId]->getPointsNeeded($ma
     $team[playerTeamId]->calculateMovement($map, "up_right");
 }
 
+/* - Edited out to take away sideways movement.  Edit back in to allow sideways movement.
 if ($team[playerTeamId]->getPoints() >= ($team[playerTeamId]->getPointsNeeded($map) / 2)) {
     $team[playerTeamId]->calculateMovement($map, "left");
     $team[playerTeamId]->calculateMovement($map, "right");
 }
+*/
 
 echo "<h1>Main page</h1><br>";
 
@@ -49,7 +51,7 @@ if ($maxPoints == 0) {
 
 echo "Your team has: ".$team[playerTeamId]->getPoints()." points out of a maximum: ".$maxPoints."<br>";
 echo "Your team needs: ".$team[playerTeamId]->getPointsNeeded($map)." points to move forwards.<br>";
-echo "Your team needs: ".($team[playerTeamId]->getPointsNeeded($map) / 2)." points to move sideways.<br>";
+// echo "Your team needs: ".($team[playerTeamId]->getPointsNeeded($map) / 2)." points to move sideways.<br>"; - Put back in to allow sideways movement
 
 
 $map->drawEverything($team);
